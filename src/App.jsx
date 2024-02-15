@@ -5,6 +5,7 @@ import Homepage from "./pages/Homepage";
 import PageNotFound from "./pages/PageNotFound";
 import AppLayout from "./pages/AppLayout";
 import Login from "./pages/Login";
+import Citylist from "./components/Citylist";
 
 function App() {
   return (
@@ -18,8 +19,8 @@ function App() {
           {/* In Nested Routes I don't necessary need a component to 
           pass in the element, I can pass a normal JSX element also */}
           {/*This is an index route*/}
-          <Route index element={<p>List of cities</p>} />{" "}
-          <Route path="cities" element={<p>List of cities</p>} />
+          <Route index element={<Citylist />} />{" "}
+          <Route path="cities" element={<Citylist />} />
           <Route path="countries" element={<p>List of countries</p>} />
           <Route path="form" element={<p>Form</p>} />
         </Route>
