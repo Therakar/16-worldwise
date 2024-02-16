@@ -5,9 +5,32 @@ import Homepage from "./pages/Homepage";
 import PageNotFound from "./pages/PageNotFound";
 import AppLayout from "./pages/AppLayout";
 import Login from "./pages/Login";
-import Citylist from "./components/Citylist";
+import CityList from "./components/CityList";
+import { useEffect, useState } from "react";
+
+const BASE_URL = "http://localhost:9000";
 
 function App() {
+  const [cities, setCities] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(function () {
+    async function fetchCities() {
+      try {
+        setIsLoading(true);
+        const res = await fetch(`${BASE_URL}/cities`);
+        const data = await res.json();
+        setCities(data);
+        console.log(data);
+      } catch {
+        alert("ERROR");
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchCities();
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -19,8 +42,14 @@ function App() {
           {/* In Nested Routes I don't necessary need a component to 
           pass in the element, I can pass a normal JSX element also */}
           {/*This is an index route*/}
-          <Route index element={<Citylist />} />{" "}
-          <Route path="cities" element={<Citylist />} />
+          <Route
+            index
+            element={<CityList cities={cities} isLoading={isLoading} />}
+          />
+          <Route
+            path="cities"
+            element={<CityList cities={cities} isLoading={isLoading} />}
+          />
           <Route path="countries" element={<p>List of countries</p>} />
           <Route path="form" element={<p>Form</p>} />
         </Route>
