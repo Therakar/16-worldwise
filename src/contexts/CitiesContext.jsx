@@ -40,6 +40,26 @@ function CitiesProvider({ children }) {
     }
   }
 
+  async function createCity(newCity) {
+    try {
+      setIsLoading(true);
+      // This is the standard way to make a POST request, so it sends data to the API
+      const res = await fetch(`${BASE_URL}/cities`, {
+        method: "POST",
+        body: JSON.stringify(newCity),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      console.log(data);
+    } catch {
+      alert("ERROR");
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   function getFlag(flag) {
     if (flag === undefined) return;
     let countryCode = Array.from(flag, (codeUnit) => codeUnit.codePointAt())
@@ -59,6 +79,7 @@ function CitiesProvider({ children }) {
         currentCity,
         getCity,
         getFlag,
+        createCity,
       }}
     >
       {children}
