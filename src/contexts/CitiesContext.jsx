@@ -32,7 +32,6 @@ function CitiesProvider({ children }) {
       const res = await fetch(`${BASE_URL}/cities/${id}`);
       const data = await res.json();
       setCurrentCity(data);
-      // console.log(data);
     } catch {
       alert("ERROR");
     } finally {
@@ -52,7 +51,8 @@ function CitiesProvider({ children }) {
         },
       });
       const data = await res.json();
-      console.log(data);
+
+      setCities((cities) => [...cities, data]);
     } catch {
       alert("ERROR");
     } finally {
